@@ -7,12 +7,12 @@
 
 **Natural Language Processing · Machine Learning · Interactive Analytics**
 
-An end-to-end AI-powered customer support intelligence platform that transforms unstructured customer conversations into actionable insights.
+An end-to-end AI-powered customer support intelligence platform that transforms unstructured customer conversations into meaningful insights.
 
 <br>
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Scikit Learn](https://img.shields.io/badge/Scikit_Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit_Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 
@@ -54,9 +54,17 @@ SupportIQ is an end-to-end Natural Language Processing and Machine Learning appl
 
 The system processes unstructured customer messages, identifies customer intentions, predicts support categories, analyzes sentiment, extracts important keywords and structured entities, and provides detailed linguistic insights.
 
-The project combines classical NLP techniques, statistical text modeling, semantic embeddings, supervised Machine Learning, and pretrained Transformer-based emotion analysis within a unified portfolio project.
+The project combines classical NLP techniques, statistical text modeling, semantic embeddings, supervised Machine Learning, and pretrained Transformer-based emotion analysis.
 
 An interactive Streamlit dashboard with a custom purple glassmorphism interface provides real-time model inference and visual analytics.
+
+### Problem Statement
+
+Customer support departments receive large volumes of unstructured messages related to accounts, payments, orders, refunds, shipping, invoices, and other services.
+
+Manually identifying and categorizing customer requests can be time-consuming and inefficient.
+
+SupportIQ demonstrates how NLP and Machine Learning can automate customer query understanding and provide structured information that could support intelligent customer service workflows.
 
 ---
 
@@ -70,8 +78,8 @@ An interactive Streamlit dashboard with a custom purple glassmorphism interface 
 | **Keyword Extraction** | TF-IDF-based keyword and key phrase extraction |
 | **Entity Recognition** | General-purpose NER and regex-based customer identifiers |
 | **NLP Laboratory** | Tokenization, stemming, lemmatization, POS tagging and syntactic analysis |
-| **Semantic Analysis** | Word2Vec embeddings and cosine similarity experiments |
-| **Topic Modeling** | Latent Dirichlet Allocation for discovering customer support themes |
+| **Semantic Analysis** | Notebook-based Word2Vec embeddings and cosine similarity experiments |
+| **Topic Modeling** | Notebook-based Latent Dirichlet Allocation |
 | **Text Summarization** | TF-IDF-based extractive sentence summarization |
 | **Dataset Analytics** | Interactive category distributions, intent distributions and record filtering |
 | **Model Evaluation** | Classification metrics, prediction outcomes and evaluation methodology |
@@ -263,66 +271,42 @@ A dedicated evaluation workspace visualizes held-out classification metrics, cat
 
 ```mermaid
 flowchart TD
-
     A[Customer Support Dataset] --> B[Exploratory Data Analysis]
-
     B --> C[Text Cleaning and Normalization]
-
     C --> D[Exploratory NLP Analysis]
-
     C --> E[ML Normalization and Deduplication]
-
     E --> F[Stratified Train Test Split]
-
     F --> G[Training Dataset]
-
     F --> H[Held-Out Test Dataset]
-
     G --> I[TF-IDF and ML Pipeline]
-
     I --> J[Multinomial Naive Bayes]
-
     I --> K[Logistic Regression]
-
     I --> L[Linear SVM]
-
     J --> M[Five-Fold Cross Validation]
-
     K --> M
-
     L --> M
-
     M --> N[Best Model Selection]
-
-    N --> O[Held-Out Evaluation]
-
-    H --> O
-
-    O --> P[Model Serialization]
-
-    P --> Q[SupportIQ Dashboard]
-
-    R[Customer Query] --> Q
-
-    Q --> S[Intent Classification]
-
-    Q --> T[Sentiment and Emotion]
-
-    Q --> U[Keywords and Entities]
-
-    Q --> V[NLP Laboratory]
-
-    Q --> W[Interactive Analytics]
+    N --> O[Refit Selected Model on Training Data]
+    O --> P[Held-Out Evaluation]
+    H --> P
+    P --> Q[Model Serialization]
+    Q --> R[SupportIQ Dashboard]
+    S[Customer Query] --> R
+    R --> T[Intent Classification]
+    R --> U[Sentiment and Optional Emotion Analysis]
+    R --> V[Keywords and Entities]
+    R --> W[NLP Laboratory]
+    R --> X[Interactive Analytics]
 
     style A fill:#312E81,color:#fff
     style N fill:#7C3AED,color:#fff
-    style P fill:#4338CA,color:#fff
-    style Q fill:#6D28D9,color:#fff
-    style S fill:#065F46,color:#fff
+    style Q fill:#4338CA,color:#fff
+    style R fill:#6D28D9,color:#fff
     style T fill:#065F46,color:#fff
     style U fill:#065F46,color:#fff
     style V fill:#065F46,color:#fff
     style W fill:#065F46,color:#fff
+    style X fill:#065F46,color:#fff
 ```
 
 ---
@@ -445,6 +429,7 @@ Exploratory data analysis was conducted to understand the structure, distributio
 | Common Query Length | 6–11 words |
 | NLTK Tokens | 236,448 |
 | Tokens After Stopword Removal | 129,261 |
+| Removed Tokens | 107,187 |
 | Stopword Reduction | 45.33% |
 
 ---
@@ -594,6 +579,7 @@ TF-IDF is used for:
 | Minimum Word Count | 2 |
 | Training Epochs | 15 |
 | Vocabulary Size | 1,027 |
+| Random State | 42 |
 
 ### Word Similarity Results
 
@@ -636,7 +622,7 @@ Classification thresholds:
 
 - Positive: compound score >= 0.05
 - Negative: compound score <= -0.05
-- Neutral: compound score between -0.05 and 0.05
+- Neutral: compound score strictly between -0.05 and 0.05
 
 These are predicted sentiment distributions rather than ground-truth annotations.
 
@@ -796,7 +782,7 @@ Logistic Regression was selected based on its unrounded cross-validation macro F
 <div align="center">
 
 | Metric | Result |
-|:---|:---:|
+|:---|---:|
 | **Accuracy** | **99.28%** |
 | Macro Precision | 99.29% |
 | Macro Recall | 99.12% |
@@ -852,7 +838,7 @@ Detailed confusion matrix analysis is available in the Jupyter Notebook.
 ## Project Structure
 
 ```text
-Customer_Support_Intelligence/
+Customer_Support_Intelligence_NLP/
 │
 ├── .streamlit/
 │   └── config.toml
@@ -900,9 +886,9 @@ Saved model artifacts enable inference without retraining.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/dhruv4AlgoForge/Customer_Support_Intelligence.git
+git clone https://github.com/dhruv4AlgoForge/Customer_Support_Intelligence_NLP.git
 
-cd Customer_Support_Intelligence
+cd Customer_Support_Intelligence_NLP
 ```
 
 ### 2. Create a Virtual Environment
@@ -960,7 +946,7 @@ http://localhost:8501
 ### 8. Explore the Jupyter Notebook
 
 ```bash
-jupyter lab
+python -m jupyter notebook
 ```
 
 Open:
@@ -969,7 +955,68 @@ Open:
 notebooks/customer_support_nlp.ipynb
 ```
 
-The notebook contains complete exploratory NLP experiments, statistical analysis, feature engineering, Machine Learning training and evaluation.
+The notebook contains the exploratory NLP experiments, statistical analysis, feature engineering, Machine Learning training and evaluation.
+
+---
+
+## Application Modules
+
+### Query Intelligence
+
+- Custom customer query input
+- Predefined customer support examples
+- Real-time intent classification
+- Customer category prediction
+- Prediction confidence gauge
+- Top three predicted intents
+- Confidence-based warnings
+- VADER sentiment classification
+- Sentiment distribution visualization
+- TF-IDF keyword extraction
+- Optional Transformer emotion classification
+- Domain-specific entity extraction
+
+### NLP Analysis Laboratory
+
+- Text normalization
+- Word tokenization
+- Sentence tokenization
+- Stopword removal
+- Stemming
+- Lemmatization
+- Negation handling
+- Part-of-speech tagging
+- Named entity recognition
+- Domain-specific entity extraction
+- Noun phrase extraction
+- Dependency parsing
+- Dependency tree visualization
+- Keyword extraction
+- Extractive text summarization
+
+### Dataset Insights
+
+- Dataset overview
+- Unique customer query analysis
+- Customer category distribution
+- Customer intent distribution
+- Interactive category filters
+- Customer query search
+- Dataset preview
+
+### Model Performance
+
+- Held-out test accuracy
+- Macro precision
+- Macro recall
+- Macro F1-score
+- Category accuracy
+- Correct and incorrect prediction counts
+- Model evaluation charts
+- Training and testing distribution
+- Evaluation methodology
+
+Additional experiments including Word2Vec, cosine similarity retrieval, Bag of Words, One-Hot Encoding, LDA topic modeling, and confusion matrix analysis are available in the Jupyter Notebook.
 
 ---
 
@@ -991,6 +1038,28 @@ The notebook contains complete exploratory NLP experiments, statistical analysis
 
 ---
 
+## User Interface
+
+The SupportIQ application uses a custom purple glassmorphism-inspired interface.
+
+Design features include:
+
+- Dark purple gradient backgrounds
+- Glass-effect metric cards
+- Responsive content layout
+- Sidebar navigation
+- Interactive Plotly charts
+- Gradient action buttons
+- Keyword pills
+- Confidence gauges
+- Sentiment donut charts
+- Dataset search and filtering
+- LinkedIn and GitHub integration
+
+The interface was developed using Streamlit with custom HTML and CSS styling.
+
+---
+
 ## Limitations
 
 - The dataset contains synthetic customer support conversations.
@@ -1003,6 +1072,7 @@ The notebook contains complete exploratory NLP experiments, statistical analysis
 - The optional Transformer module requires additional dependencies and pretrained model access.
 - The captured dashboard includes a missing Transformer dependency warning; emotion inference was explored separately in the notebook.
 - Word2Vec, LDA topic modeling, cosine similarity and confusion matrix analysis remain notebook-based experiments.
+- Cloud deployment and independent reproduction in a fresh environment have not yet been verified.
 
 ---
 
@@ -1027,23 +1097,23 @@ The notebook contains complete exploratory NLP experiments, statistical analysis
 
 ### Dataset
 
-Bitext Customer Support Dataset
+**Bitext Customer Support Dataset**
 
 Publisher: Bitext
 
-https://huggingface.co/datasets/bitext
+[Bitext on Hugging Face](https://huggingface.co/datasets/bitext)
 
 Refer to the original dataset documentation and applicable license for usage and redistribution conditions.
 
 ### Pretrained Emotion Model
 
-DistilRoBERTa Emotion Classification
+**DistilRoBERTa Emotion Classification**
 
 Model:
 
     j-hartmann/emotion-english-distilroberta-base
 
-https://huggingface.co/j-hartmann/emotion-english-distilroberta-base
+[View Pretrained Emotion Model](https://huggingface.co/j-hartmann/emotion-english-distilroberta-base)
 
 ---
 
@@ -1092,7 +1162,9 @@ Passionate about building intelligent applications, exploring Machine Learning a
 
 **Transforming Customer Conversations into Meaningful Intelligence**
 
-If you found this project useful, consider giving the repository a ⭐.
+[![Star Repository](https://img.shields.io/badge/Star_Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dhruv4AlgoForge/Customer_Support_Intelligence_NLP)
+
+If you found this project useful, consider giving the repository a star.
 
 <br>
 
@@ -1101,5 +1173,9 @@ Developed by **Dhruv Panchal**
 [LinkedIn](https://www.linkedin.com/in/dhruv-panchal-a14865258/) |
 [GitHub](https://github.com/dhruv4AlgoForge) |
 [Portfolio](https://intellisyslabs.online/)
+
+<br>
+
+[Back to Top](#-supportiq)
 
 </div>
